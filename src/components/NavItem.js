@@ -47,9 +47,6 @@ const NavItem = ({
         }}
         to={href}
       >
-        {Icon && (
-          <Icon size="20" />
-        )}
         <span>
           {title}
         </span>

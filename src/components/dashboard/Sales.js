@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -9,26 +10,49 @@ import {
   useTheme,
   colors
 } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import instance from 'src/connection';
+
+const getMaterialInYearly = () => {
+  const materialIn = instance.get('/dashboard/total_material_in_yearly/').then((res) => res.data);
+  return materialIn;
+};
+
+const getMaterialOutYearly = () => {
+  const materialIn = instance.get('/dashboard/total_material_out_yearly/').then((res) => res.data);
+  return materialIn;
+};
 
 const Sales = (props) => {
   const theme = useTheme();
+  const [materialInQty, setMaterialInQty] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [materialOutQty, setMaterialOutQty] = useState([]);
+
+  useEffect(() => {
+    getMaterialInYearly().then((values) => {
+      setMaterialInQty(values);
+      // setMaterialOutQty(values[1]);
+    });
+    getMaterialOutYearly().then((values) => {
+      setMaterialOutQty(values);
+      // setMaterialOutQty(values[1]);
+    });
+  }, []);
 
   const data = {
     datasets: [
       {
         backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year'
+        data: materialInQty,
+        label: 'Material In'
       },
       {
-        backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year'
-      }
+        backgroundColor: colors.green[500],
+        data: materialOutQty,
+        label: 'Material Out'
+      },
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   };
 
   const options = {
@@ -89,16 +113,7 @@ const Sales = (props) => {
   return (
     <Card {...props}>
       <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon />}
-            size="small"
-            variant="text"
-          >
-            Last 7 days
-          </Button>
-        )}
-        title="Latest Sales"
+        title="Material Per Month"
       />
       <Divider />
       <CardContent>
@@ -115,22 +130,6 @@ const Sales = (props) => {
         </Box>
       </CardContent>
       <Divider />
-      <Box
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 2
-        }}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
-        >
-          Overview
-        </Button>
-      </Box>
     </Card>
   );
 };

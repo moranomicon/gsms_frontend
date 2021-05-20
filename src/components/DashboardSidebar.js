@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
@@ -11,10 +11,12 @@ import {
   Typography
 } from '@material-ui/core';
 import {
+  BarChart as BarChartIcon,
   FileText as FileTextIcon,
   Database as DatabaseIcon,
   Bookmark as BookmarkIcon,
-  BarChart as BarChartIcon
+  User as UserIcon,
+  // User as UserIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -49,12 +51,12 @@ const items = [
     href: '/app/packing-list-change-history',
     icon: BookmarkIcon,
     title: 'Packing List Change History'
+  },
+  {
+    href: '/app/users',
+    icon: UserIcon,
+    title: 'Users'
   }
-  // {
-  //   href: '/app/account',
-  //   icon: UserIcon,
-  //   title: 'Account'
-  // },
   // {
   //   href: '/app/settings',
   //   icon: SettingsIcon,
@@ -103,14 +105,12 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         }}
       >
         <Avatar
-          component={RouterLink}
           src={user.avatar}
           style={{
             cursor: 'pointer',
             width: 100,
             height: 100
           }}
-          to="/app/account"
         />
         <Typography color="textPrimary" variant="h5">
           {user.name}
@@ -132,7 +132,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           ))}
         </List>
       </Box>
-      <Box style={{ flexGrow: 1 }} />
+      <Box style={{ flexGrow: 2 }} />
     </Box>
   );
 
