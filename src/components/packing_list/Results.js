@@ -22,6 +22,7 @@ const Results = ({ className, ...rest }) => {
 
   const [packingList, setPackingList] = useState([]);
   const [materialLists] = useState({});
+  const [transferLocations] = useState({});
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -29,6 +30,9 @@ const Results = ({ className, ...rest }) => {
     instance('/packing-list/').then((res) => setPackingList(res.data));
     instance.get('/material/').then((res) => res.data.forEach((element) => {
       materialLists[element.id] = element.material_name;
+    }));
+    instance.get('/transfer-location/').then((res) => res.data.forEach((element) => {
+      transferLocations[element.name] = element.name;
     }));
   }, []);
 
@@ -53,6 +57,7 @@ const Results = ({ className, ...rest }) => {
       packing_no: newData.packing_no,
       weight: newData.weight,
       weight_out: newData.weight_out,
+      transfer_to: newData.transfer_to,
       material_name: newData.material_name_id ? newData.material_name_id : oldData.material_name.id,
       packing_change_date: newData.packing_change_date
     };
@@ -80,6 +85,11 @@ const Results = ({ className, ...rest }) => {
               {
                 title: 'Weight Out',
                 field: 'weight_out',
+              },
+              {
+                title: 'Transfer To',
+                field: 'transfer_to',
+                lookup: transferLocations,
               },
               {
                 title: 'Packing Change Date', field: 'packing_change_date', type: 'date', width: 20

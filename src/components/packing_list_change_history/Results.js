@@ -45,6 +45,7 @@ const Results = ({ className, ...rest }) => {
             columns={[{ title: 'Packing No', field: 'packing_list.packing_no' },
               { title: 'Old Weight', field: 'old_weight' },
               { title: 'Weight Out', field: 'weight_out', width: 20 },
+              { title: 'Transfer To', field: 'transfer_to', width: 20 },
               {
                 title: 'Packing Change Date', field: 'packing_change_date', width: 20, editable: false, render: (rowData) => moment(rowData.packing_change_date).format('DD/MM/YYYY')
               },

@@ -11,6 +11,7 @@ import {
   Typography
 } from '@material-ui/core';
 import {
+  Truck as TruckIcon,
   BarChart as BarChartIcon,
   FileText as FileTextIcon,
   Database as DatabaseIcon,
@@ -35,7 +36,7 @@ const items = [
   {
     href: '/app/materials',
     icon: DatabaseIcon,
-    title: 'Materials'
+    title: 'Material'
   },
   {
     href: '/app/material-change-history',
@@ -51,6 +52,11 @@ const items = [
     href: '/app/packing-list-change-history',
     icon: BookmarkIcon,
     title: 'Packing List Change History'
+  },
+  {
+    href: '/app/locations',
+    icon: TruckIcon,
+    title: 'Transfer Location'
   },
   {
     href: '/app/users',

@@ -12,6 +12,7 @@ import MaterialChangeHistoryList from './pages/MaterialChangeHistoryList';
 import MaterialListView from './pages/MaterialList';
 import PackingListView from './pages/PackingList';
 import PackingListChangeHistory from './pages/PackingListChangeHistoryList';
+import TransferLocations from './pages/TransferLocations';
 import Users from './pages/Users';
 
 const routes = [
@@ -26,6 +27,7 @@ const routes = [
       { path: 'material-change-history', element: <MaterialChangeHistoryList /> },
       { path: 'packing-list-change-history', element: <PackingListChangeHistory /> },
       { path: 'users', element: <Users /> },
+      { path: 'locations', element: <TransferLocations /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },

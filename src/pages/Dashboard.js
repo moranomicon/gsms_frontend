@@ -5,7 +5,7 @@ import {
   Grid
 } from '@material-ui/core';
 import TotalMaterial from 'src/components/dashboard/TotalMaterial';
-import Sales from 'src/components/dashboard//Sales';
+import TotalMaterialByYear from 'src/components/dashboard/TotalMaterialByYear';
 import TotalPackingList from 'src/components/dashboard/TotalPackingList';
 import TotalMaterialOut from 'src/components/dashboard/TodayMaterialOut';
 import TodayMaterialIn from 'src/components/dashboard/TodayMaterialIn';
@@ -70,7 +70,7 @@ const Dashboard = () => (
             xl={12}
             xs={12}
           >
-            <Sales />
+            <TotalMaterialByYear />
           </Grid>
         </Grid>
       </Container>

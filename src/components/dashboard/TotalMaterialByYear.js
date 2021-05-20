@@ -22,7 +22,7 @@ const getMaterialOutYearly = () => {
   return materialIn;
 };
 
-const Sales = (props) => {
+const TotalMaterialByYear = (props) => {
   const theme = useTheme();
   const [materialInQty, setMaterialInQty] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -134,4 +134,4 @@ const Sales = (props) => {
   );
 };
 
-export default Sales;
+export default TotalMaterialByYear;

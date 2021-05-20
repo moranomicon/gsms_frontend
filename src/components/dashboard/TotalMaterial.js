@@ -63,7 +63,7 @@ const TotalMaterial = (props) => {
             color="textSecondary"
             variant="body1"
           >
-            Types
+            KG
           </Typography>
         </Box>
       </CardContent>
