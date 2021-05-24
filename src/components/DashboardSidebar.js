@@ -16,7 +16,7 @@ import {
   FileText as FileTextIcon,
   Database as DatabaseIcon,
   Bookmark as BookmarkIcon,
-  User as UserIcon,
+  // User as UserIcon,
   // User as UserIcon
 } from 'react-feather';
 import NavItem from './NavItem';
@@ -58,11 +58,11 @@ const items = [
     icon: TruckIcon,
     title: 'Transfer Location'
   },
-  {
-    href: '/app/users',
-    icon: UserIcon,
-    title: 'Users'
-  }
+  // {
+  //   href: '/app/users',
+  //   icon: UserIcon,
+  //   title: 'Users'
+  // }
   // {
   //   href: '/app/settings',
   //   icon: SettingsIcon,

@@ -46,6 +46,7 @@ const Results = ({ className, ...rest }) => {
               { title: 'Material Old Quantity', field: 'material_old_quantity' },
               { title: 'Material In', field: 'material_in_qty', width: 20 },
               { title: 'Material Out', field: 'material_out_qty', width: 20 },
+              { title: 'Transfer To', field: 'transfer_to', width: 20 },
               {
                 title: 'Material Change Date', field: 'material_change_date', width: 20, render: (rowData) => moment(rowData.material_change_date).format('DD/MM/YYYY')
               },

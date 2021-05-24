@@ -24,7 +24,7 @@ const TotalPackingList = (props) => {
       <CardContent>
         <Grid container spacing={3} style={{ justifyContent: 'space-between' }}>
           <Grid item>
-            <Typography color="textSecondary" gutterBottom variant="h6">
+            <Typography color="textSecondary" gutterBottom variant="subtitle1">
               TOTAL PACKING LIST
             </Typography>
             <Typography color="textPrimary" variant="h2">

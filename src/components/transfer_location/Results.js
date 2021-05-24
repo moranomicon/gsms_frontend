@@ -37,7 +37,7 @@ const Results = ({ className, ...rest }) => {
   };
 
   const handleRowDelete = (oldData, resolve) => {
-    instance.delete(`/transfer-location/${oldData.id}/`).then(() => refreshLocations());
+    instance.delete(`/transfer-location/${oldData.name}/`).then(() => refreshLocations());
     resolve();
     enqueueSnackbar(`Location ${oldData.name} Deleted!`);
   };

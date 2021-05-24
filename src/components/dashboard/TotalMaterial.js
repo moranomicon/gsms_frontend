@@ -31,7 +31,7 @@ const TotalMaterial = (props) => {
             <Typography
               color="textSecondary"
               gutterBottom
-              variant="h6"
+              variant="subtitle1"
             >
               TOTAL MATERIAL
             </Typography>

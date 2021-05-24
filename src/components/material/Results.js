@@ -5,10 +5,7 @@ import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import MaterialTable from 'material-table';
 import {
-  Box,
-  makeStyles,
-  Card,
-  TablePagination
+  Box, makeStyles, Card, TablePagination
 } from '@material-ui/core';
 import tableIcons from 'src/utils/icons';
 import instance from 'src/connection';
@@ -31,12 +28,16 @@ const Results = ({ className, ...rest }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [transferLocations] = useState({});
 
   const [material, setMaterial] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     instance.get('/material/').then((res) => setMaterial(res.data));
+    instance.get('/transfer-location/').then((res) => res.data.forEach((element) => {
+      transferLocations[element.name] = element.name;
+    }));
   }, []);
 
   const refreshMaterials = () => {
@@ -56,11 +57,21 @@ const Results = ({ className, ...rest }) => {
   };
 
   const handleRowUpdate = (newData, oldData, resolve) => {
-    instance
-      .patch(`/material/${oldData.id}/update_materials/`, newData)
-      .then(() => refreshMaterials());
+    if ((newData.material_in || newData.material_out) && !newData.transfer_to) {
+      enqueueSnackbar('Please input transfer location!');
+    }
+    if (
+      (newData.material_in || newData.material_out)
+      && !newData.material_change_date
+    ) {
+      enqueueSnackbar('Please input change date!');
+    } else {
+      instance
+        .patch(`/material/${oldData.id}/update_materials/`, newData)
+        .then(() => refreshMaterials());
+      enqueueSnackbar(`Material ${oldData.material_name} Updated!`);
+    }
     resolve();
-    enqueueSnackbar(`Material ${oldData.material_name} Updated!`);
   };
 
   const handleLimitChange = (event) => {
@@ -77,20 +88,32 @@ const Results = ({ className, ...rest }) => {
         <Box minWidth={1050}>
           <MaterialTable
             icons={tableIcons}
-            columns={[{ title: 'Material Name', field: 'material_name' },
+            columns={[
+              { title: 'Material Name', field: 'material_name' },
               { title: 'Material Quantity', field: 'material_quantity' },
               { title: 'Material In', field: 'material_in', width: 20 },
               { title: 'Material Out', field: 'material_out', width: 20 },
+              {
+                title: 'Transfer To',
+                field: 'transfer_to',
+                lookup: transferLocations
+              },
               {
                 title: 'Material Change Date',
                 field: 'material_change_date',
                 type: 'date',
                 width: 20,
-                render: (rowData) => moment(rowData.material_change_date).format('DD/MM/YYYY HH:mm:ss')
+                render: (rowData) => moment(rowData.material_change_date).format(
+                  'DD/MM/YYYY HH:mm:ss'
+                )
               },
               {
-                title: 'Created At', field: 'created_at', width: 20, editable: false, render: (rowData) => moment(rowData.created_at).format('DD/MM/YYYY HH:mm:ss')
-              },
+                title: 'Created At',
+                field: 'created_at',
+                width: 20,
+                editable: false,
+                render: (rowData) => moment(rowData.created_at).format('DD/MM/YYYY HH:mm:ss')
+              }
             ]}
             data={material}
             components={{
@@ -103,15 +126,12 @@ const Results = ({ className, ...rest }) => {
                   page={page}
                   rowsPerPage={limit}
                 />
-              ),
+              )
             }}
             title="Materials"
             options={{
               exportButton: true,
-              pageSize: 10,
-              // onChangePage: (e, pageSize) => {
-
-              // }
+              pageSize: 10
             }}
             editable={{
               onRowUpdate: (newData, oldData) => new Promise((resolve) => {
