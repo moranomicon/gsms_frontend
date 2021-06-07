@@ -10,6 +10,8 @@ import {
 import tableIcons from 'src/utils/icons';
 import instance from 'src/connection';
 import { useSnackbar } from 'notistack';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -57,17 +59,33 @@ const Results = ({ className, ...rest }) => {
   };
 
   const handleRowUpdate = (newData, oldData, resolve) => {
-    if ((newData.material_in || newData.material_out) && !newData.transfer_to) {
+    if ((newData.material_out || newData.material_in) && !newData.transfer_to) {
       enqueueSnackbar('Please input transfer location!');
     }
-    if (
-      (newData.material_in || newData.material_out)
-      && !newData.material_change_date
+    if ((newData.material_out || newData.material_in) && !newData.material_change_date
     ) {
       enqueueSnackbar('Please input change date!');
+    } else if (newData.material_out || newData.material_in) {
+      confirmAlert({
+        title: `Confirm ${newData.material_name}`,
+        message: `${(newData.material_out ? `Subtract ${newData.material_out}` : `Add ${newData.material_in}`)} on ${moment(newData.material_change_date).format('DD/MM/YYYY')} to location ${newData.transfer_to} ?`,
+        buttons: [
+          {
+            label: 'Yes',
+            onClick: () => {
+              instance.patch(`/material/${oldData.id}/update_materials/`, newData)
+                .then(() => refreshMaterials());
+              enqueueSnackbar(`Material ${oldData.material_name} Updated!`);
+            }
+          },
+          {
+            label: 'No',
+            onClick: () => resolve()
+          }
+        ]
+      });
     } else {
-      instance
-        .patch(`/material/${oldData.id}/update_materials/`, newData)
+      instance.patch(`/material/${oldData.id}/update_materials/`, newData)
         .then(() => refreshMaterials());
       enqueueSnackbar(`Material ${oldData.material_name} Updated!`);
     }
@@ -94,7 +112,7 @@ const Results = ({ className, ...rest }) => {
               { title: 'Material In', field: 'material_in', width: 20 },
               { title: 'Material Out', field: 'material_out', width: 20 },
               {
-                title: 'Transfer To',
+                title: 'Transfer Location',
                 field: 'transfer_to',
                 lookup: transferLocations
               },

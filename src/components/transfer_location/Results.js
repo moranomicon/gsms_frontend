@@ -65,7 +65,7 @@ const Results = ({ className, ...rest }) => {
               },
             ]}
             data={locations}
-            title="Users"
+            title="Transfer Location"
             options={{
               pageSize: 10,
               exportButton: true

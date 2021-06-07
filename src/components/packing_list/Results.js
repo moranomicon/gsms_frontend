@@ -9,6 +9,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Box, Card, makeStyles } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import instance from 'src/connection';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -59,8 +61,28 @@ const Results = ({ className, ...rest }) => {
         material_name: newData.material_name_id ? newData.material_name_id : oldData.material_name.id,
         packing_change_date: newData.packing_change_date
       };
-      instance.patch(`/packing-list/${oldData.id}/update_packing_list/`, updatedData).then(() => refreshPackingLists());
-      enqueueSnackbar(`Packing List ${oldData.packing_no} Updated!`);
+      if (newData.weight_out) {
+        confirmAlert({
+          title: `Confirm ${newData.packing_no}`,
+          message: `Subtract ${newData.weight_out} KG on ${moment(updatedData.packing_change_date).format('DD/MM/YYYY')} ?`,
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {
+                instance.patch(`/packing-list/${oldData.id}/update_packing_list/`, updatedData).then(() => refreshPackingLists());
+                enqueueSnackbar(`Packing List ${oldData.packing_no} Updated!`);
+              }
+            },
+            {
+              label: 'No',
+              onClick: () => resolve()
+            }
+          ]
+        });
+      } else {
+        instance.patch(`/packing-list/${oldData.id}/update_packing_list/`, updatedData).then(() => refreshPackingLists());
+        enqueueSnackbar(`Packing List ${oldData.packing_no} Updated!`);
+      }
     }
     resolve();
   };

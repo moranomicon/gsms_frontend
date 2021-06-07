@@ -18,9 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onLogin = (username, password) => {
-    Promise.all([instance.post('/api-auth/login/', { username, password })]).then((res) => {
-      navigate('/app/dashboard/', { replace: true });
-    })
+    navigate('/app/dashboard/', { replace: true })
       .catch((error) => {
         // eslint-disable-next-line no-alert
         alert(error);
