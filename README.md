@@ -4,6 +4,10 @@
 
 [![Material Kit - React](https://s3.eu-west-2.amazonaws.com/devias/products/react-material-dashboard/react-material-free-xl.jpg)](https://react-material-dashboard.devias.io/)
 
+Greentech Stock Mananagement System Frontend
+
+Developed for practical work project in college.
+
 > Free React Admin Dashboard made with [Material UI's](https://material-ui.com/?ref=devias-io) components, [React](https://reactjs.org/?ref=devias-io) and of course [create-react-app](https://facebook.github.io/create-react-app/?ref=devias-io) to boost your app development process! We'll launch a pro version soon, so if you are interested subscribe to our personal emailing list on [https://devias.io/](https://devias.io/)
 
 ## Upgrade to PRO Version
